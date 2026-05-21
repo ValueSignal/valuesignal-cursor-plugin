@@ -1,0 +1,10 @@
+{
+  "name": "@valuesignal/cursor-plugin-mcp",
+  "version": "1.0.0",
+  "private": false,
+  "type": "module",
+  "description": "MCP server for the ValueSignal Cursor marketplace plugin",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.1"
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "name": "valuesignal",
+  "version": "1.0.0",
+  "description": "Capture AI-assisted work from Cursor into ValueSignal — measured signals, private by default, visible in your logbook.",
+  "author": {
+    "name": "ValueSignal",
+    "email": "support@valuesignal.ai"
+  },
+  "homepage": "https://valuesignal.ai",
+  "repository": "https://github.com/YoMetaMaybe/valuesignal-cursor-plugin",
+  "license": "MIT",
+  "keywords": [
+    "valuesignal",
+    "ai-fluency",
+    "productivity",
+    "evidence",
+    "logbook"
+  ],
+  "logo": "assets/signal-mark.svg"
+}

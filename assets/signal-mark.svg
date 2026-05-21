@@ -1,0 +1,16 @@
+<svg width="28" height="28" viewBox="0 0 28 28" fill="none"
+     xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="signalGradient" x1="0" y1="0" x2="0" y2="28">
+      <stop offset="0%" stop-color="#6EE7F9"/>
+      <stop offset="100%" stop-color="#4CC9F0"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="2"  y="14" width="3" height="10" rx="1.5" fill="url(#signalGradient)"/>
+  <rect x="7"  y="9"  width="3" height="15" rx="1.5" fill="url(#signalGradient)"/>
+  <rect x="12" y="4"  width="3" height="20" rx="1.5" fill="url(#signalGradient)"/>
+  <rect x="17" y="9"  width="3" height="15" rx="1.5" fill="url(#signalGradient)"/>
+  <rect x="22" y="14" width="3" height="10" rx="1.5" fill="url(#signalGradient)"/>
+</svg>
+

@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "valuesignal": {
+      "command": "node",
+      "args": ["mcp/server.mjs"],
+      "env": {
+        "VALUESIGNAL_API_BASE": "https://app.valuesignal.ai"
+      }
+    }
+  }
+}
