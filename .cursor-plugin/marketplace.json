@@ -6,14 +6,14 @@
   },
   "metadata": {
     "description": "ValueSignal — capture and measure AI-assisted work in Cursor",
-    "version": "1.0.0"
+    "version": "1.0.1"
   },
   "plugins": [
     {
       "name": "valuesignal",
       "source": ".",
       "description": "Capture AI-assisted work from Cursor into ValueSignal — measured signals, private by default.",
-      "version": "1.0.0",
+      "version": "1.0.1",
       "keywords": ["valuesignal", "ai-fluency", "productivity", "evidence"]
     }
   ]

@@ -37,9 +37,21 @@ npm install
 VALUESIGNAL_JWT_TOKEN=... node mcp/server.mjs
 ```
 
+## Security and data handling
+
+- **Open source in this repo:** MCP server, skills, rules, and commands only. The ValueSignal API and scoring stack are proprietary and not published here.
+- **Network:** The MCP server sends HTTPS requests only to `VALUESIGNAL_API_BASE` (default `https://app.valuesignal.ai`) when the user runs capture or auth tools. No other outbound endpoints.
+- **Credentials:** Users set `VALUESIGNAL_JWT_TOKEN` in Cursor MCP settings (from their ValueSignal login). Tokens are not stored in the repository.
+- **Capture:** Users control what is submitted via `valuesignal_capture_turn`. The bundled rule blocks exfiltration of API keys, passwords, and `.env` content.
+- **Details:** See [SECURITY.md](./SECURITY.md).
+
 ## Privacy
 
 Do not capture secrets, tokens, or credentials. See `rules/valuesignal-privacy.mdc`.
+
+## CI
+
+GitHub Actions runs `npm ci` and `node scripts/validate-plugin.mjs` on every push to `main`.
 
 ## License
 
