@@ -1,0 +1,9 @@
+<!-- Marketplace logo: solid brand fills (no url(#id)) so host pages cannot hijack gradient IDs -->
+<svg width="128" height="128" viewBox="0 0 28 28" fill="none"
+     xmlns="http://www.w3.org/2000/svg">
+  <rect x="2"  y="14" width="3" height="10" rx="1.5" fill="#6EE7F9"/>
+  <rect x="7"  y="9"  width="3" height="15" rx="1.5" fill="#57DFF4"/>
+  <rect x="12" y="4"  width="3" height="20" rx="1.5" fill="#4CC9F0"/>
+  <rect x="17" y="9"  width="3" height="15" rx="1.5" fill="#57DFF4"/>
+  <rect x="22" y="14" width="3" height="10" rx="1.5" fill="#6EE7F9"/>
+</svg>
