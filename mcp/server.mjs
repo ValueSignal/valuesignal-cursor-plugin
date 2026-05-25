@@ -9,7 +9,7 @@ import { buildCaptureEvent, decodeJwtSub, postCursorIngress } from '../lib/ingre
 import { getApiBase, getJwt } from '../lib/config.mjs';
 
 const server = new Server(
-  { name: 'valuesignal', version: '1.0.1' },
+  { name: 'valuesignal', version: '1.0.2' },
   { capabilities: { tools: {} } }
 );
 
@@ -117,10 +117,14 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
           text: JSON.stringify(
             {
               ok: true,
-              status: result.accepted ? 'accepted' : result,
+              status: result.accepted ? 'accepted' : result.status || result,
+              duplicate: Boolean(result.duplicate),
               traceId: result.traceId,
+              sessionId: event.sessionId,
+              capturedAt: event.capturedAt,
               evidenceType: result.evidenceType,
               trustTier: result.trustTier,
+              scoresPersisted: result.scoresPersisted ?? null,
             },
             null,
             2

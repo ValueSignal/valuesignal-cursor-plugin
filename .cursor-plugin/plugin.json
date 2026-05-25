@@ -1,6 +1,6 @@
 {
   "name": "valuesignal",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Capture AI-assisted work from Cursor into ValueSignal — measured signals, private by default, visible in your logbook.",
   "author": {
     "name": "ValueSignal",
