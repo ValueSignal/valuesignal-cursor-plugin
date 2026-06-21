@@ -1,7 +1,7 @@
 {
   "name": "valuesignal",
-  "version": "1.0.3",
-  "description": "Capture AI-assisted work from Cursor into ValueSignal — measured signals, private by default, visible in your logbook.",
+  "version": "1.0.4",
+  "description": "Turn your real Cursor AI work into a verified builder profile — measured skill signals, private by default, shareable as proof of work.",
   "author": {
     "name": "ValueSignal",
     "email": "support@valuesignal.ai"

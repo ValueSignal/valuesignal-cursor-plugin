@@ -1,6 +1,17 @@
 # ValueSignal for Cursor
 
-Capture AI-assisted work from Cursor into [ValueSignal](https://valuesignal.ai) — measured signals in your logbook, private by default.
+Turn your real Cursor AI work into a verified builder profile — measured skill signals in your logbook, private by default, shareable as proof of work.
+
+## What you're building
+
+Every turn you capture is evidence. Over a few real sessions that evidence compounds into a profile that reflects how you actually work with AI:
+
+1. **Capture** — send meaningful AI turns to ValueSignal as you work (manually via the `valuesignal_capture_turn` tool).
+2. **Signals accrue** — each capture is scored into skill and behavior signals. Individual turns score on capture; the profile gets meaningful as volume builds across multiple real sessions, so capture regularly rather than once.
+3. **Your Domain Signal + skill profile** — signals roll up into your strongest domains and a skill signature you can see in the logbook.
+4. **Proof of Work** — when you're ready, share a public Proof of Work artifact built from that verified activity.
+
+Private by default: nothing is shared until you choose to. Recruiter discovery is invite-only today, so building your profile now is about owning a verifiable record of your AI work — not broadcasting it.
 
 ## Requirements
 

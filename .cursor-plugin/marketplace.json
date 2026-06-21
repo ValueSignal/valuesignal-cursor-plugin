@@ -5,15 +5,15 @@
     "email": "support@valuesignal.ai"
   },
   "metadata": {
-    "description": "ValueSignal — capture and measure AI-assisted work in Cursor",
-    "version": "1.0.3"
+    "description": "ValueSignal — turn your real Cursor AI work into a verified builder profile",
+    "version": "1.0.4"
   },
   "plugins": [
     {
       "name": "valuesignal",
       "source": ".",
-      "description": "Capture AI-assisted work from Cursor into ValueSignal — measured signals, private by default.",
-      "version": "1.0.3",
+      "description": "Turn your real Cursor AI work into a verified builder profile — measured skill signals, private by default, shareable as proof of work.",
+      "version": "1.0.4",
       "keywords": ["valuesignal", "ai-fluency", "productivity", "evidence"]
     }
   ]

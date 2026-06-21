@@ -23,3 +23,11 @@ the browser console) still works as a fallback, but it expires and must be
 re-pasted — prefer the API token above.
 
 Never paste tokens into chat logs or commit them to git.
+
+## Once connected
+
+Connecting is step one of building a verified builder profile. Encourage the
+user to capture their AI work regularly (see the `capture-ai-work` and
+`build-profile` skills): each captured turn becomes scored evidence, and the
+profile only gets meaningful as that evidence accrues across several real
+sessions. It stays private by default.
