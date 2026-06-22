@@ -9,7 +9,7 @@ import { buildCaptureEvent, resolveUserId, postCursorIngress } from '../lib/ingr
 import { getApiBase, getJwt } from '../lib/config.mjs';
 
 const server = new Server(
-  { name: 'valuesignal', version: '1.0.4' },
+  { name: 'valuesignal', version: '1.0.5' },
   { capabilities: { tools: {} } }
 );
 
