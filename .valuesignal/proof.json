@@ -1,0 +1,200 @@
+{
+  "schemaVersion": "vs.proof.v1",
+  "issuer": "valuesignal.ai",
+  "issuedAt": "2026-07-05T01:43:23.641Z",
+  "expiresAt": "2026-10-03T01:43:23.641Z",
+  "subject": {
+    "pid": "9885d6e8-7841-4896-a2b2-3086705dccf5",
+    "displayName": "Ken Garrow"
+  },
+  "proof": {
+    "scope": "whole_profile",
+    "proofType": "Mentor",
+    "proofDescription": "Sets the standard for validated work and helps others raise theirs.",
+    "overallSignal": 69,
+    "sessions": 29,
+    "signals": 2122,
+    "totals": {
+      "evidenceTotal": 2119,
+      "validationEventsTotal": 1098,
+      "domainCount": 30
+    },
+    "topDomains": [
+      {
+        "key": "data_science",
+        "label": "Data Science",
+        "tier": "Practitioner",
+        "evidenceCount": 40,
+        "validationEventCount": 24
+      },
+      {
+        "key": "analytics",
+        "label": "Analytics",
+        "tier": "Explorer",
+        "evidenceCount": 9,
+        "validationEventCount": 10
+      },
+      {
+        "key": "dev_ops",
+        "label": "DevOps",
+        "tier": "Practitioner",
+        "evidenceCount": 120,
+        "validationEventCount": 77
+      },
+      {
+        "key": "marketing",
+        "label": "Marketing",
+        "tier": "Explorer",
+        "evidenceCount": 8,
+        "validationEventCount": 17
+      },
+      {
+        "key": "back_end_dev",
+        "label": "Back-End Development",
+        "tier": "Practitioner",
+        "evidenceCount": 127,
+        "validationEventCount": 75
+      }
+    ],
+    "topSkills": [
+      {
+        "capability": "attention_to_detail",
+        "score": 86
+      },
+      {
+        "capability": "learning_agility",
+        "score": 75
+      },
+      {
+        "capability": "technical_depth",
+        "score": 71
+      },
+      {
+        "capability": "problem_solving",
+        "score": 64
+      },
+      {
+        "capability": "communication",
+        "score": 61
+      },
+      {
+        "capability": "strategic_thinking",
+        "score": 59
+      }
+    ],
+    "signalPatterns": [
+      {
+        "id": "H6_REUSABLE_MODEL",
+        "name": "Reusable Modeling",
+        "category": "Systems & Modeling",
+        "count": 714
+      },
+      {
+        "id": "H2_ACTION_TRANSLATION",
+        "name": "Action Translation",
+        "category": "Action & Execution",
+        "count": 254
+      },
+      {
+        "id": "H4_COMPARATIVE_VIEWS",
+        "name": "Perspective Comparison",
+        "category": "Comparative Reasoning",
+        "count": 99
+      },
+      {
+        "id": "H3_ASSUMPTION_SURFACING",
+        "name": "Assumption Surfacing",
+        "category": "Critical Thinking",
+        "count": 76
+      },
+      {
+        "id": "H8_LEVERAGE",
+        "name": "Leverage Identification",
+        "category": "Leverage & Impact",
+        "count": 17
+      },
+      {
+        "id": "H1_SYNTHESIS_STRATEGIC",
+        "name": "Strategic Synthesis",
+        "category": "Synthesis & Insight",
+        "count": 6
+      },
+      {
+        "id": "H5_ROLE_FILTERING",
+        "name": "Role-Based Filtering",
+        "category": "Perspective Shifting",
+        "count": 5
+      }
+    ],
+    "evidenceTrust": {
+      "sources": [
+        {
+          "source": "chatgpt",
+          "count": 817,
+          "level": "self_reported"
+        },
+        {
+          "source": "claude",
+          "count": 805,
+          "level": "self_reported"
+        },
+        {
+          "source": "cursor",
+          "count": 190,
+          "level": "ide_integrated"
+        },
+        {
+          "source": "gemini",
+          "count": 175,
+          "level": "self_reported"
+        },
+        {
+          "source": "web-console",
+          "count": 90,
+          "level": "self_reported"
+        },
+        {
+          "source": "extension",
+          "count": 45,
+          "level": "self_reported"
+        }
+      ],
+      "strongestLevel": "ide_integrated"
+    }
+  },
+  "maturityLadder": [
+    "Explorer",
+    "Builder",
+    "Practitioner",
+    "Architect",
+    "Mentor"
+  ],
+  "evidenceTrustLevels": [
+    {
+      "level": "self_reported",
+      "meaning": "User-mediated capture (browser extension, imports)"
+    },
+    {
+      "level": "ide_integrated",
+      "meaning": "IDE/plugin capture (Cursor MCP path)"
+    },
+    {
+      "level": "server_attested",
+      "meaning": "HMAC-signed machine-client ingress"
+    }
+  ],
+  "definitions": {
+    "signal": "One scored capability observation; a captured turn emits one per detected capability.",
+    "session": "One captured conversation.",
+    "evidence": "A capture classified into a domain; one capture can map to multiple domains. Displayed domain counts are a top-N subset; totals cover all domains.",
+    "pattern": "One heuristic detection; a turn can fire several.",
+    "validationEvent": "A system-detected verification behavior in the user’s own interactions (refinement, methodology question, standards check, teaching signal). Behavioral evidence, not cross-source corroboration; corroboration lives on the evidence-trust axis."
+  },
+  "verify": {
+    "certId": "vsc_ry35roN09dTlB0MXivKR",
+    "payloadHash": "61601bd37d6fbb1106c248963a97a19807a5f2f876cf89baa2ba170333e532e5",
+    "hashScope": "sha256 over canonical (recursively key-sorted) JSON of {subject, proof, issuedAt}",
+    "publicUrl": "https://app.valuesignal.ai/p/zD8p8DR",
+    "verifyApi": "https://app.valuesignal.ai/api/proof/verify/vsc_ry35roN09dTlB0MXivKR"
+  }
+}
