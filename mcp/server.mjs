@@ -5,11 +5,12 @@ import {
   CallToolRequestSchema,
   ListToolsRequestSchema,
 } from '@modelcontextprotocol/sdk/types.js';
-import { buildCaptureEvent, resolveUserId, postCursorIngress } from '../lib/ingress-client.mjs';
+import { buildCaptureEvent, resolveUserId, postCursorIngress, postProofCert } from '../lib/ingress-client.mjs';
 import { getApiBase, getJwt } from '../lib/config.mjs';
+import { detectWorkspaceProjectRef, normalizeProjectRef } from '../lib/project-ref.mjs';
 
 const server = new Server(
-  { name: 'valuesignal', version: '1.0.5' },
+  { name: 'valuesignal', version: '1.0.7' },
   { capabilities: { tools: {} } }
 );
 
@@ -46,6 +47,26 @@ server.setRequestHandler(ListToolsRequestSchema, async () => ({
       name: 'valuesignal_dashboard_url',
       description: 'Return the URL to open your ValueSignal logbook in the browser.',
       inputSchema: { type: 'object', properties: {} },
+    },
+    {
+      name: 'valuesignal_build_proof',
+      description:
+        'Mint a verifiable ValueSignal Proof of Work certification (vs.proof.v1) from your captured AI work. Returns the .valuesignal/ folder file contents to commit into a repo plus a public verify URL a screening partner can check. By default certifies the whole profile; pass scope "project" to certify only work bound to this workspace\u2019s repo (detected from the git origin remote) — the cert then discloses only project-relevant signal and the verifier enforces repo identity.',
+      inputSchema: {
+        type: 'object',
+        properties: {
+          scope: {
+            type: 'string',
+            enum: ['whole_profile', 'project'],
+            description: 'Certification scope (default whole_profile)',
+          },
+          projectRef: {
+            type: 'string',
+            description:
+              'Repo to bind a project-scoped cert to (git remote URL or host/owner/repo). Defaults to this workspace\u2019s origin remote.',
+          },
+        },
+      },
     },
   ],
 }));
@@ -101,6 +122,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
   if (name === 'valuesignal_capture_turn') {
     const jwt = getJwt();
     const userId = await resolveUserId(jwt);
+    const projectRef = await detectWorkspaceProjectRef();
     const event = buildCaptureEvent({
       userId,
       workspaceId: userId,
@@ -108,6 +130,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
       messageIndex: Number.isFinite(args?.messageIndex) ? args.messageIndex : 0,
       userPrompt: String(args?.userPrompt || ''),
       systemResponse: String(args?.systemResponse || ''),
+      projectRef,
     });
     const result = await postCursorIngress(event);
     return {
@@ -125,6 +148,58 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
               evidenceType: result.evidenceType,
               trustTier: result.trustTier,
               scoresPersisted: result.scoresPersisted ?? null,
+              projectRef: event.payload.projectRef || null,
+            },
+            null,
+            2
+          ),
+        },
+      ],
+    };
+  }
+
+  if (name === 'valuesignal_build_proof') {
+    let scope = args?.scope === 'project' ? 'project' : 'whole_profile';
+    let projectRef = null;
+    if (scope === 'project') {
+      projectRef = normalizeProjectRef(args?.projectRef) || (await detectWorkspaceProjectRef());
+      if (!projectRef) {
+        return {
+          content: [
+            {
+              type: 'text',
+              text: 'Project-scoped certification needs a repo identity, but this workspace has no git origin remote and no projectRef was provided. Pass projectRef (e.g. github.com/owner/repo) or run from a repo with a remote — or mint with scope "whole_profile".',
+            },
+          ],
+        };
+      }
+    }
+    const result = await postProofCert({ scope, projectRef });
+    return {
+      content: [
+        {
+          type: 'text',
+          text: JSON.stringify(
+            {
+              ok: true,
+              certId: result.certId,
+              schemaVersion: result.schemaVersion,
+              issuedAt: result.issuedAt,
+              expiresAt: result.expiresAt,
+              verifyUrl: result.verifyUrl,
+              publicUrl: result.publicUrl,
+              scope: result.proof?.scope || scope,
+              project: result.proof?.project || null,
+              summary: {
+                proofType: result.proof?.proofType,
+                overallSignal: result.proof?.overallSignal,
+                sessions: result.proof?.sessions,
+                signals: result.proof?.signals,
+                domains: (result.proof?.topDomains || []).map((d) => d.label),
+              },
+              files: result.files,
+              nextStep:
+                'Write each entry in `files` to the repo (paths are relative to the repo root), then commit VERIFICATION.md and the .valuesignal/ folder. The verifyUrl lets any screening partner confirm this certification is authentic, unrevoked, and fresh.',
             },
             null,
             2

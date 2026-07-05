@@ -9,7 +9,9 @@ Every turn you capture is evidence. Over a few real sessions that evidence compo
 1. **Capture** — send meaningful AI turns to ValueSignal as you work (manually via the `valuesignal_capture_turn` tool).
 2. **Signals accrue** — each capture is scored into skill and behavior signals. Individual turns score on capture; the profile gets meaningful as volume builds across multiple real sessions, so capture regularly rather than once.
 3. **Your Domain Signal + skill profile** — signals roll up into your strongest domains and a skill signature you can see in the logbook.
-4. **Proof of Work** — when you're ready, share a public Proof of Work artifact built from that verified activity.
+4. **Proof of Work** — when you're ready, share a public Proof of Work artifact built from that verified activity, or mint a verifiable certification (`vs.proof.v1`) straight into a repo for screening processes.
+
+Captures made from a workspace with a git remote are automatically bound to that repo's identity, so you can later mint a **project-scoped** certification that discloses only your validated work on that project — and verifiers can check the cert sits in the repo it was minted for.
 
 Private by default: nothing is shared until you choose to. Recruiter discovery is invite-only today, so building your profile now is about owning a verifiable record of your AI work — not broadcasting it.
 
@@ -41,8 +43,9 @@ permits capturing AI activity (not account/billing access) and is revocable.
 | Tool | Purpose |
 |------|---------|
 | `valuesignal_auth_status` | Verify JWT and API base |
-| `valuesignal_capture_turn` | Send one user/assistant turn to ingress |
+| `valuesignal_capture_turn` | Send one user/assistant turn to ingress (auto-binds to this workspace's git remote) |
 | `valuesignal_dashboard_url` | Logbook URL |
+| `valuesignal_build_proof` | Mint a verifiable Proof of Work certification — whole-profile, or `scope: "project"` to certify only this repo's work |
 
 ## Local test (plugin folder)
 

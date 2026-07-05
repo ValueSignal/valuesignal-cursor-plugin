@@ -6,8 +6,9 @@ description: Help the user connect ValueSignal to Cursor by configuring VALUESIG
 # Connect ValueSignal
 
 Use a scoped API token (recommended) so you don't have to re-paste a browser
-session token every few days. The token only allows capturing AI activity — it
-can't access the account, billing, or data — and can be revoked anytime.
+session token every few days. The token only allows capturing AI activity and
+minting your own Proof of Work certification — it can't access the account,
+billing, or data — and can be revoked anytime.
 
 1. Log in at https://app.valuesignal.ai
 2. Go to **Account Settings → Integrations & API tokens**
@@ -27,7 +28,8 @@ Never paste tokens into chat logs or commit them to git.
 ## Once connected
 
 Connecting is step one of building a verified builder profile. Encourage the
-user to capture their AI work regularly (see the `capture-ai-work` and
-`build-profile` skills): each captured turn becomes scored evidence, and the
-profile only gets meaningful as that evidence accrues across several real
-sessions. It stays private by default.
+user to capture their AI work regularly (see the `capture-ai-work` skill): each
+captured turn becomes scored evidence, and the profile only gets meaningful as
+that evidence accrues across several real sessions. It stays private by
+default. When the user needs to prove their work to a screening partner, the
+`certify-work` skill turns that evidence into a committable certification.
