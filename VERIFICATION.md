@@ -10,9 +10,9 @@ Certified by [ValueSignal](https://valuesignal.ai) on 2026-07-05. Overall signal
 
 ## Verify this certification
 
-- Verify API (source of truth): https://app.valuesignal.ai/api/proof/verify/vsc_ry35roN09dTlB0MXivKR
+- Verify API (source of truth): https://app.valuesignal.ai/api/proof/verify/vsc_5Tb1ouwGsJf30nUEH1YB
 - Live profile: https://app.valuesignal.ai/p/zD8p8DR
-- Certificate id: `vsc_ry35roN09dTlB0MXivKR`
+- Certificate id: `vsc_5Tb1ouwGsJf30nUEH1YB`
 - Valid through: 2026-10-03
 
 The machine-readable copy lives at `.valuesignal/proof.json`. Its payload

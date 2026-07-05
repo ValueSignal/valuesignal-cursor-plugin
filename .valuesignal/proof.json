@@ -1,8 +1,8 @@
 {
   "schemaVersion": "vs.proof.v1",
   "issuer": "valuesignal.ai",
-  "issuedAt": "2026-07-05T01:43:23.641Z",
-  "expiresAt": "2026-10-03T01:43:23.641Z",
+  "issuedAt": "2026-07-05T02:20:32.336Z",
+  "expiresAt": "2026-10-03T02:20:32.336Z",
   "subject": {
     "pid": "9885d6e8-7841-4896-a2b2-3086705dccf5",
     "displayName": "Ken Garrow"
@@ -131,12 +131,12 @@
         {
           "source": "chatgpt",
           "count": 817,
-          "level": "self_reported"
+          "level": "live_captured"
         },
         {
           "source": "claude",
           "count": 805,
-          "level": "self_reported"
+          "level": "live_captured"
         },
         {
           "source": "cursor",
@@ -146,17 +146,17 @@
         {
           "source": "gemini",
           "count": 175,
-          "level": "self_reported"
+          "level": "live_captured"
         },
         {
           "source": "web-console",
           "count": 90,
-          "level": "self_reported"
+          "level": "live_captured"
         },
         {
           "source": "extension",
           "count": 45,
-          "level": "self_reported"
+          "level": "live_captured"
         }
       ],
       "strongestLevel": "ide_integrated"
@@ -172,7 +172,11 @@
   "evidenceTrustLevels": [
     {
       "level": "self_reported",
-      "meaning": "User-mediated capture (browser extension, imports)"
+      "meaning": "User-provided history (file imports, onboarding narrative)"
+    },
+    {
+      "level": "live_captured",
+      "meaning": "Real-time observed capture at the moment of work (browser extension, web console), carrying message signatures"
     },
     {
       "level": "ide_integrated",
@@ -191,10 +195,10 @@
     "validationEvent": "A system-detected verification behavior in the user’s own interactions (refinement, methodology question, standards check, teaching signal). Behavioral evidence, not cross-source corroboration; corroboration lives on the evidence-trust axis."
   },
   "verify": {
-    "certId": "vsc_ry35roN09dTlB0MXivKR",
-    "payloadHash": "61601bd37d6fbb1106c248963a97a19807a5f2f876cf89baa2ba170333e532e5",
+    "certId": "vsc_5Tb1ouwGsJf30nUEH1YB",
+    "payloadHash": "9a2e7fe18e7a9425ae72272c79e06cd10cd16a788cbc1406c2eb337047c42c83",
     "hashScope": "sha256 over canonical (recursively key-sorted) JSON of {subject, proof, issuedAt}",
     "publicUrl": "https://app.valuesignal.ai/p/zD8p8DR",
-    "verifyApi": "https://app.valuesignal.ai/api/proof/verify/vsc_ry35roN09dTlB0MXivKR"
+    "verifyApi": "https://app.valuesignal.ai/api/proof/verify/vsc_5Tb1ouwGsJf30nUEH1YB"
   }
 }
