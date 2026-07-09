@@ -1,19 +1,19 @@
 # ValueSignal Verification
 
-**Ken Garrow** — Mentor
+**Ken Garrow** — Explorer
 
-> Sets the standard for validated work and helps others raise theirs.
+> Putting AI to work and starting to learn what to trust.
 
-Certified by [ValueSignal](https://valuesignal.ai) on 2026-07-05. Overall signal: **69/100** (mean of top core skills) across 29 captured sessions and 2122 scored signals.
+Certified by [ValueSignal](https://valuesignal.ai) on 2026-07-09. Overall signal: **54/100** (mean of top core skills) across 1 captured sessions and 3 scored signals.
 
-**Scope:** whole-profile certification of the holder’s validated AI work; project-scoped certifications are on the roadmap.
+**Scope:** project certification bound to `github.com/valuesignal/valuesignal-cursor-plugin` — claims cover only the holder’s validated AI work on this repository. Attribution provenance: 3 user_asserted.
 
 ## Verify this certification
 
-- Verify API (source of truth): https://app.valuesignal.ai/api/proof/verify/vsc_5Tb1ouwGsJf30nUEH1YB
+- Verify API (source of truth): https://app.valuesignal.ai/api/proof/verify/vsc_k0A5Be6p3kZuhhjBGfbA
 - Live profile: https://app.valuesignal.ai/p/zD8p8DR
-- Certificate id: `vsc_5Tb1ouwGsJf30nUEH1YB`
-- Valid through: 2026-10-03
+- Certificate id: `vsc_k0A5Be6p3kZuhhjBGfbA`
+- Valid through: 2026-10-07
 
 The machine-readable copy lives at `.valuesignal/proof.json`. Its payload
 hash is SHA-256 over the canonically serialized claims: anyone can recompute
@@ -24,30 +24,20 @@ Maturity ladder (lowest to highest): Explorer → Builder → Practitioner → A
 
 ## Domain coverage
 
-- **Data Science** — Practitioner, evidence: 40, validations: 24
-- **Analytics** — Explorer, evidence: 9, validations: 10
-- **DevOps** — Practitioner, evidence: 120, validations: 77
-- **Marketing** — Explorer, evidence: 8, validations: 17
-- **Back-End Development** — Practitioner, evidence: 127, validations: 75
+- **Front-End Development** — Explorer, evidence: 2, validations: 0
+- **Back-End Development** — Explorer, evidence: 2, validations: 0
+- **DevOps** — Explorer, evidence: 2, validations: 0
+- **Mobile Development** — Explorer, evidence: 1, validations: 0
+- **Workflow Management** — Explorer, evidence: 1, validations: 0
 
 ## Skill signature (core skills)
 
-- attention to detail: 86/100
-- learning agility: 75/100
-- technical depth: 71/100
-- problem solving: 64/100
-- communication: 61/100
-- strategic thinking: 59/100
+- technical depth: 75/100
+- problem solving: 33/100
 
 ## Signal patterns
 
-- Reusable Modeling (Systems & Modeling) — observed 714x
-- Action Translation (Action & Execution) — observed 254x
-- Perspective Comparison (Comparative Reasoning) — observed 99x
-- Assumption Surfacing (Critical Thinking) — observed 76x
-- Leverage Identification (Leverage & Impact) — observed 17x
-- Strategic Synthesis (Synthesis & Insight) — observed 6x
-- Role-Based Filtering (Perspective Shifting) — observed 5x
+_No recurring patterns yet._
 
 ---
 

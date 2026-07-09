@@ -1,162 +1,84 @@
 {
   "schemaVersion": "vs.proof.v1",
   "issuer": "valuesignal.ai",
-  "issuedAt": "2026-07-05T02:20:32.336Z",
-  "expiresAt": "2026-10-03T02:20:32.336Z",
+  "issuedAt": "2026-07-09T00:05:25.023Z",
+  "expiresAt": "2026-10-07T00:05:25.023Z",
   "subject": {
     "pid": "9885d6e8-7841-4896-a2b2-3086705dccf5",
     "displayName": "Ken Garrow"
   },
   "proof": {
-    "scope": "whole_profile",
-    "proofType": "Mentor",
-    "proofDescription": "Sets the standard for validated work and helps others raise theirs.",
-    "overallSignal": 69,
-    "sessions": 29,
-    "signals": 2122,
+    "scope": "project",
+    "project": {
+      "repoUrl": "github.com/valuesignal/valuesignal-cursor-plugin",
+      "bindingBreakdown": {
+        "user_asserted": 3
+      }
+    },
+    "proofType": "Explorer",
+    "proofDescription": "Putting AI to work and starting to learn what to trust.",
+    "overallSignal": 54,
+    "sessions": 1,
+    "signals": 3,
     "totals": {
-      "evidenceTotal": 2119,
-      "validationEventsTotal": 1098,
-      "domainCount": 30
+      "evidenceTotal": 11,
+      "validationEventsTotal": 0,
+      "domainCount": 8
     },
     "topDomains": [
       {
-        "key": "data_science",
-        "label": "Data Science",
-        "tier": "Practitioner",
-        "evidenceCount": 40,
-        "validationEventCount": 24
-      },
-      {
-        "key": "analytics",
-        "label": "Analytics",
+        "key": "front_end_dev",
+        "label": "Front-End Development",
         "tier": "Explorer",
-        "evidenceCount": 9,
-        "validationEventCount": 10
-      },
-      {
-        "key": "dev_ops",
-        "label": "DevOps",
-        "tier": "Practitioner",
-        "evidenceCount": 120,
-        "validationEventCount": 77
-      },
-      {
-        "key": "marketing",
-        "label": "Marketing",
-        "tier": "Explorer",
-        "evidenceCount": 8,
-        "validationEventCount": 17
+        "evidenceCount": 2,
+        "validationEventCount": 0
       },
       {
         "key": "back_end_dev",
         "label": "Back-End Development",
-        "tier": "Practitioner",
-        "evidenceCount": 127,
-        "validationEventCount": 75
+        "tier": "Explorer",
+        "evidenceCount": 2,
+        "validationEventCount": 0
+      },
+      {
+        "key": "dev_ops",
+        "label": "DevOps",
+        "tier": "Explorer",
+        "evidenceCount": 2,
+        "validationEventCount": 0
+      },
+      {
+        "key": "mobile_dev",
+        "label": "Mobile Development",
+        "tier": "Explorer",
+        "evidenceCount": 1,
+        "validationEventCount": 0
+      },
+      {
+        "key": "workflow_management",
+        "label": "Workflow Management",
+        "tier": "Explorer",
+        "evidenceCount": 1,
+        "validationEventCount": 0
       }
     ],
     "topSkills": [
       {
-        "capability": "attention_to_detail",
-        "score": 86
-      },
-      {
-        "capability": "learning_agility",
+        "capability": "technical_depth",
         "score": 75
       },
       {
-        "capability": "technical_depth",
-        "score": 71
-      },
-      {
         "capability": "problem_solving",
-        "score": 64
-      },
-      {
-        "capability": "communication",
-        "score": 61
-      },
-      {
-        "capability": "strategic_thinking",
-        "score": 59
+        "score": 33
       }
     ],
-    "signalPatterns": [
-      {
-        "id": "H6_REUSABLE_MODEL",
-        "name": "Reusable Modeling",
-        "category": "Systems & Modeling",
-        "count": 714
-      },
-      {
-        "id": "H2_ACTION_TRANSLATION",
-        "name": "Action Translation",
-        "category": "Action & Execution",
-        "count": 254
-      },
-      {
-        "id": "H4_COMPARATIVE_VIEWS",
-        "name": "Perspective Comparison",
-        "category": "Comparative Reasoning",
-        "count": 99
-      },
-      {
-        "id": "H3_ASSUMPTION_SURFACING",
-        "name": "Assumption Surfacing",
-        "category": "Critical Thinking",
-        "count": 76
-      },
-      {
-        "id": "H8_LEVERAGE",
-        "name": "Leverage Identification",
-        "category": "Leverage & Impact",
-        "count": 17
-      },
-      {
-        "id": "H1_SYNTHESIS_STRATEGIC",
-        "name": "Strategic Synthesis",
-        "category": "Synthesis & Insight",
-        "count": 6
-      },
-      {
-        "id": "H5_ROLE_FILTERING",
-        "name": "Role-Based Filtering",
-        "category": "Perspective Shifting",
-        "count": 5
-      }
-    ],
+    "signalPatterns": [],
     "evidenceTrust": {
       "sources": [
         {
-          "source": "chatgpt",
-          "count": 817,
-          "level": "live_captured"
-        },
-        {
-          "source": "claude",
-          "count": 805,
-          "level": "live_captured"
-        },
-        {
           "source": "cursor",
-          "count": 190,
+          "count": 3,
           "level": "ide_integrated"
-        },
-        {
-          "source": "gemini",
-          "count": 175,
-          "level": "live_captured"
-        },
-        {
-          "source": "web-console",
-          "count": 90,
-          "level": "live_captured"
-        },
-        {
-          "source": "extension",
-          "count": 45,
-          "level": "live_captured"
         }
       ],
       "strongestLevel": "ide_integrated"
@@ -187,6 +109,20 @@
       "meaning": "HMAC-signed machine-client ingress"
     }
   ],
+  "projectBindingLevels": [
+    {
+      "method": "declared_at_capture",
+      "meaning": "Repo identity asserted by tooling (git remote) at the moment of work"
+    },
+    {
+      "method": "user_asserted",
+      "meaning": "The holder confirmed the work belongs to this project (including inference-assisted selections the holder approved)"
+    },
+    {
+      "method": "inferred",
+      "meaning": "Model-classified without holder confirmation; never used for certification claims in v1"
+    }
+  ],
   "definitions": {
     "signal": "One scored capability observation; a captured turn emits one per detected capability.",
     "session": "One captured conversation.",
@@ -195,10 +131,10 @@
     "validationEvent": "A system-detected verification behavior in the user’s own interactions (refinement, methodology question, standards check, teaching signal). Behavioral evidence, not cross-source corroboration; corroboration lives on the evidence-trust axis."
   },
   "verify": {
-    "certId": "vsc_5Tb1ouwGsJf30nUEH1YB",
-    "payloadHash": "9a2e7fe18e7a9425ae72272c79e06cd10cd16a788cbc1406c2eb337047c42c83",
+    "certId": "vsc_k0A5Be6p3kZuhhjBGfbA",
+    "payloadHash": "8f18ea4039e0a57ffeaf3e4d9108654e9a72bffb04df4a8e045d5ad4087598a2",
     "hashScope": "sha256 over canonical (recursively key-sorted) JSON of {subject, proof, issuedAt}",
     "publicUrl": "https://app.valuesignal.ai/p/zD8p8DR",
-    "verifyApi": "https://app.valuesignal.ai/api/proof/verify/vsc_5Tb1ouwGsJf30nUEH1YB"
+    "verifyApi": "https://app.valuesignal.ai/api/proof/verify/vsc_k0A5Be6p3kZuhhjBGfbA"
   }
 }
