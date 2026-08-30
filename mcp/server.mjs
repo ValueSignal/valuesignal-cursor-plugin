@@ -10,20 +10,50 @@ import { getApiBase, getJwt } from '../lib/config.mjs';
 import { detectWorkspaceProjectRef, normalizeProjectRef } from '../lib/project-ref.mjs';
 
 const server = new Server(
-  { name: 'valuesignal', version: '1.0.9' },
+  { name: 'valuesignal', version: '1.0.10' },
   { capabilities: { tools: {} } }
 );
 
+// TOOL ANNOTATIONS
+// `title` and `annotations` are required fields in both the Anthropic and
+// OpenAI submission rubrics; the hints tell a host whether a call is safe to
+// retry or to run without confirmation, so they must describe real behaviour.
+//
+//   capture_turn      writes, and is NOT idempotent — buildCaptureEvent mints a
+//                     fresh idempotencyKey per call, so two identical calls
+//                     create two events. Claiming otherwise would be a lie a
+//                     reviewer can catch in one test.
+//   build_proof       writes (mints a certification) and reaches the network.
+//   auth_status       reads local env only — no network, hence openWorld false.
+//   dashboard_url     returns a string; no I/O at all.
+//
+// Nothing here is destructive: no tool deletes or overwrites user data.
 server.setRequestHandler(ListToolsRequestSchema, async () => ({
   tools: [
     {
       name: 'valuesignal_auth_status',
+      title: 'Check ValueSignal connection',
+      annotations: {
+        title: 'Check ValueSignal connection',
+        readOnlyHint: true,
+        destructiveHint: false,
+        idempotentHint: true,
+        openWorldHint: false,
+      },
       description:
         'Check whether VALUESIGNAL_JWT_TOKEN is configured and which API base is used.',
       inputSchema: { type: 'object', properties: {} },
     },
     {
       name: 'valuesignal_capture_turn',
+      title: 'Log an AI turn to ValueSignal',
+      annotations: {
+        title: 'Log an AI turn to ValueSignal',
+        readOnlyHint: false,
+        destructiveHint: false,
+        idempotentHint: false,
+        openWorldHint: true,
+      },
       description:
         'Send one AI turn (user prompt + assistant response) to ValueSignal ingress for scoring.',
       inputSchema: {
@@ -45,11 +75,27 @@ server.setRequestHandler(ListToolsRequestSchema, async () => ({
     },
     {
       name: 'valuesignal_dashboard_url',
+      title: 'Open the ValueSignal logbook',
+      annotations: {
+        title: 'Open the ValueSignal logbook',
+        readOnlyHint: true,
+        destructiveHint: false,
+        idempotentHint: true,
+        openWorldHint: false,
+      },
       description: 'Return the URL to open your ValueSignal logbook in the browser.',
       inputSchema: { type: 'object', properties: {} },
     },
     {
       name: 'valuesignal_build_proof',
+      title: 'Mint a Proof of Work certification',
+      annotations: {
+        title: 'Mint a Proof of Work certification',
+        readOnlyHint: false,
+        destructiveHint: false,
+        idempotentHint: false,
+        openWorldHint: true,
+      },
       description:
         'Mint a verifiable ValueSignal Proof of Work certification (vs.proof.v1) from your captured AI work. Returns the .valuesignal/ folder file contents to commit into a repo plus a public verify URL a screening partner can check. By default certifies the whole profile; pass scope "project" to certify only work bound to this workspace\u2019s repo (detected from the git origin remote) — the cert then discloses only project-relevant signal and the verifier enforces repo identity.',
       inputSchema: {

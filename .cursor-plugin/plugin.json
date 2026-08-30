@@ -1,6 +1,6 @@
 {
   "name": "valuesignal",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "Turn your real Cursor AI work into a verified builder profile — measured skill signals, private by default, shareable as proof of work.",
   "author": {
     "name": "ValueSignal",
@@ -16,5 +16,8 @@
     "evidence",
     "logbook"
   ],
-  "logo": "assets/logo.svg"
+  "logo": "assets/logo.svg",
+  "documentation": "https://github.com/ValueSignal/valuesignal-cursor-plugin#readme",
+  "support": "https://github.com/ValueSignal/valuesignal-cursor-plugin/issues",
+  "privacy": "https://app.valuesignal.ai/privacy-policy.html"
 }
