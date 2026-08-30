@@ -10,7 +10,7 @@ import { getApiBase, getJwt } from '../lib/config.mjs';
 import { detectWorkspaceProjectRef, normalizeProjectRef } from '../lib/project-ref.mjs';
 
 const server = new Server(
-  { name: 'valuesignal', version: '1.0.8' },
+  { name: 'valuesignal', version: '1.0.9' },
   { capabilities: { tools: {} } }
 );
 

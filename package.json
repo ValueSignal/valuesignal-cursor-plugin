@@ -1,6 +1,6 @@
 {
   "name": "@valuesignal/cursor-plugin-mcp",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "private": false,
   "type": "module",
   "description": "MCP server for the ValueSignal Cursor marketplace plugin",
@@ -8,7 +8,8 @@
     "node": ">=18"
   },
   "scripts": {
-    "validate": "node scripts/validate-plugin.mjs ."
+    "validate": "node scripts/validate-plugin.mjs .",
+    "test": "node tests/redact.test.mjs"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.12.1"
