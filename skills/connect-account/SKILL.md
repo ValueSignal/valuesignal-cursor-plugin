@@ -27,9 +27,10 @@ Never paste tokens into chat logs or commit them to git.
 
 ## Once connected
 
-Connecting is step one of building a verified builder profile. Encourage the
-user to capture their AI work regularly (see the `capture-ai-work` skill): each
-captured turn becomes scored evidence, and the profile only gets meaningful as
-that evidence accrues across several real sessions. It stays private by
+Connecting is step one. Tell the user they can now ask you to capture an
+exchange to their logbook (see the `capture-ai-work` skill) — capture happens
+only when they ask. If they want to know how to build a meaningful profile,
+explain that each captured turn becomes scored evidence and that several real
+sessions produce a far better picture than one. It stays private by
 default. When the user needs to prove their work to a screening partner, the
 `certify-work` skill turns that evidence into a committable certification.
