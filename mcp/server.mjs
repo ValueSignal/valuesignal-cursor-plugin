@@ -10,7 +10,7 @@ import { getApiBase, getJwt } from '../lib/config.mjs';
 import { detectWorkspaceProjectRef, normalizeProjectRef } from '../lib/project-ref.mjs';
 
 const server = new Server(
-  { name: 'valuesignal', version: '1.0.10' },
+  { name: 'valuesignal', version: '1.0.11' },
   { capabilities: { tools: {} } }
 );
 
@@ -23,7 +23,11 @@ const server = new Server(
 //                     fresh idempotencyKey per call, so two identical calls
 //                     create two events. Claiming otherwise would be a lie a
 //                     reviewer can catch in one test.
-//   build_proof       writes (mints a certification) and reaches the network.
+//   build_proof       writes AND publishes a public verify URL — the one open-world tool.
+//   capture_turn      writes to the user's private logbook: a known store, not the
+//                     open internet. Closed world under the MCP spec (web search is
+//                     open; a memory store is not) and under OpenAI's rubric, which
+//                     defines openWorldHint as "affects publicly visible state".
 //   auth_status       reads local env only — no network, hence openWorld false.
 //   dashboard_url     returns a string; no I/O at all.
 //
@@ -52,7 +56,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => ({
         readOnlyHint: false,
         destructiveHint: false,
         idempotentHint: false,
-        openWorldHint: true,
+        openWorldHint: false,
       },
       description:
         'Send one AI turn (user prompt + assistant response) to ValueSignal ingress for scoring.',

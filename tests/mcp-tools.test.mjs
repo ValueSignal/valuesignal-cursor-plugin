@@ -21,7 +21,7 @@ const REQUIRED_HINTS = ['readOnlyHint', 'destructiveHint', 'idempotentHint', 'op
  *  tell a host about side effects, so it should be a deliberate edit. */
 const EXPECTED = {
   valuesignal_auth_status:   { readOnlyHint: true,  destructiveHint: false, idempotentHint: true,  openWorldHint: false },
-  valuesignal_capture_turn:  { readOnlyHint: false, destructiveHint: false, idempotentHint: false, openWorldHint: true  },
+  valuesignal_capture_turn:  { readOnlyHint: false, destructiveHint: false, idempotentHint: false, openWorldHint: false },
   valuesignal_dashboard_url: { readOnlyHint: true,  destructiveHint: false, idempotentHint: true,  openWorldHint: false },
   valuesignal_build_proof:   { readOnlyHint: false, destructiveHint: false, idempotentHint: false, openWorldHint: true  },
 };
