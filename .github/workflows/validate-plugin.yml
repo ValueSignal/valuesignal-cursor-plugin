@@ -23,14 +23,20 @@ jobs:
       - name: Install dependencies (reproducible)
         run: npm ci
 
-      - name: Verify MCP entrypoint exists
-        run: test -f mcp/server.mjs
+      - name: Verify committed MCP bundle is current
+        run: npm run check:mcp-bundle
+
+      - name: Verify install-free host packaging
+        run: npm run test:packaging
 
       - name: Validate Claude plugin manifest
         run: npx --yes @anthropic-ai/claude-code plugin validate .
 
       - name: Credential redaction tests
         run: node tests/redact.test.mjs
+
+      - name: Host platform identity tests
+        run: node tests/host-platform.test.mjs
 
       - name: Tool annotation contract
         run: node tests/mcp-tools.test.mjs

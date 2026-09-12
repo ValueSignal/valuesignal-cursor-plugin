@@ -21,6 +21,9 @@ Private by default: nothing is shared until you choose to. Recruiter discovery i
 - Node.js 18+
 - Production API must have `INGRESS_CURSOR_PLUGIN_JWT_ONLY=true` (ValueSignal server env)
 
+Marketplace installs include the MCP runtime and do not require `npm install`.
+Dependencies are only installed when developing or rebuilding the committed bundle.
+
 ## Setup
 
 Use a scoped API token so you don't have to re-paste credentials. It only
@@ -47,11 +50,12 @@ permits capturing AI activity (not account/billing access) and is revocable.
 | `valuesignal_dashboard_url` | Logbook URL |
 | `valuesignal_build_proof` | Mint a verifiable Proof of Work certification — whole-profile, or `scope: "project"` to certify only this repo's work |
 
-## Local test (plugin folder)
+## Local development (plugin folder)
 
 ```bash
 cd cursor-plugin/valuesignal
-npm install
+npm ci
+npm run build:mcp
 VALUESIGNAL_JWT_TOKEN=... node mcp/server.mjs
 ```
 
@@ -69,7 +73,9 @@ Do not capture secrets, tokens, or credentials. See `rules/valuesignal-privacy.m
 
 ## CI
 
-GitHub Actions runs `npm ci` and `node scripts/validate-plugin.mjs` on every push to `main`.
+GitHub Actions validates the manifests, rebuilds and diffs the committed MCP
+bundle, proves it starts from a clean directory without `node_modules`, and
+runs the plugin contract tests on every push to `main`.
 
 ## License
 

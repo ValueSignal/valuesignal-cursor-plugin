@@ -48,6 +48,69 @@ async function readJsonFile(filePath, context) {
   }
 }
 
+async function readTextFile(filePath, context) {
+  try {
+    return await fs.readFile(filePath, 'utf8');
+  } catch {
+    addError(`${context} is missing: ${filePath}`);
+    return null;
+  }
+}
+
+async function validateVersionConsistency(pluginDir, entry, pluginManifest, marketplace) {
+  const packageManifest = await readJsonFile(
+    path.join(pluginDir, 'package.json'),
+    `${entry.name} package.json`
+  );
+  const claudeManifest = await readJsonFile(
+    path.join(pluginDir, '.claude-plugin', 'plugin.json'),
+    `${entry.name} Claude plugin.json`
+  );
+  const packageLock = await readJsonFile(
+    path.join(pluginDir, 'package-lock.json'),
+    `${entry.name} package-lock.json`
+  );
+  const configSource = await readTextFile(
+    path.join(pluginDir, 'lib', 'config.mjs'),
+    `${entry.name} config.mjs`
+  );
+  const serverSource = await readTextFile(
+    path.join(pluginDir, 'mcp', 'server.mjs'),
+    `${entry.name} MCP server`
+  );
+
+  const matchVersion = (source, pattern) => source?.match(pattern)?.[1] || null;
+  const sites = {
+    'marketplace.plugins[].version': entry.version,
+    '.cursor-plugin/plugin.json': pluginManifest.version,
+    '.claude-plugin/plugin.json': claudeManifest?.version,
+    'package.json': packageManifest?.version,
+    'package-lock.json': packageLock?.version,
+    'package-lock.json packages[""]': packageLock?.packages?.['']?.version,
+    'lib/config.mjs': matchVersion(configSource, /PLUGIN_VERSION\s*=\s*['"]([0-9]+\.[0-9]+\.[0-9]+(?:-[\w.-]+)?)['"]/),
+    'mcp/server.mjs': matchVersion(serverSource, /version\s*:\s*['"]([0-9]+\.[0-9]+\.[0-9]+(?:-[\w.-]+)?)['"]/),
+  };
+
+  if (marketplace.metadata?.version !== undefined) {
+    sites['marketplace.metadata.version'] = marketplace.metadata.version;
+  }
+
+  for (const [site, version] of Object.entries(sites)) {
+    if (typeof version !== 'string' || !version.length) {
+      addError(`${entry.name}: version is missing or unreadable in ${site}`);
+    }
+  }
+
+  const versions = [...new Set(Object.values(sites).filter((value) => typeof value === 'string' && value.length))];
+  if (versions.length > 1) {
+    addError(
+      `${entry.name}: version mismatch: ${Object.entries(sites)
+        .map(([site, version]) => `${site}=${version || 'UNREADABLE'}`)
+        .join(', ')}`
+    );
+  }
+}
+
 function parseFrontmatter(content) {
   const normalized = content.replace(/\r\n/g, '\n');
   if (!normalized.startsWith('---\n')) return null;
@@ -148,6 +211,8 @@ async function main() {
     if (pluginManifest.name !== entry.name) {
       addError(`${entry.name}: marketplace name !== plugin.json name ("${pluginManifest.name}")`);
     }
+
+    await validateVersionConsistency(pluginDir, entry, pluginManifest, marketplace);
 
     if (pluginManifest.logo && !pluginManifest.logo.startsWith('http')) {
       const logoPath = path.join(pluginDir, pluginManifest.logo);

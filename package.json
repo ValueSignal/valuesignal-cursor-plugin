@@ -1,6 +1,6 @@
 {
   "name": "@valuesignal/cursor-plugin-mcp",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "private": false,
   "type": "module",
   "description": "MCP server for the ValueSignal Cursor marketplace plugin",
@@ -8,10 +8,18 @@
     "node": ">=18"
   },
   "scripts": {
+    "build:mcp": "node scripts/build-mcp.mjs",
+    "check:mcp-bundle": "node scripts/build-mcp.mjs && git diff --exit-code -- mcp/server.mjs",
     "validate": "node scripts/validate-plugin.mjs .",
-    "test": "node tests/redact.test.mjs"
+    "test": "node tests/redact.test.mjs",
+    "test:host": "node tests/host-platform.test.mjs",
+    "test:packaging": "node tests/host-packaging.test.mjs",
+    "test:tools": "node tests/mcp-tools.test.mjs"
   },
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.12.1"
+    "@modelcontextprotocol/sdk": "^1.30.0"
+  },
+  "devDependencies": {
+    "esbuild": "^0.28.2"
   }
 }

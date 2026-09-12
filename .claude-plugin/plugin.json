@@ -1,6 +1,6 @@
 {
   "name": "valuesignal",
-  "version": "1.0.12",
+  "version": "1.0.13",
   "description": "Turn your real Cursor and Claude Code AI work into a verified builder profile \u2014 measured skill signals, private by default, shareable as proof of work.",
   "author": {
     "name": "ValueSignal",
@@ -8,9 +8,6 @@
   },
   "homepage": "https://valuesignal.ai",
   "repository": "https://github.com/ValueSignal/valuesignal-cursor-plugin",
-  "documentation": "https://github.com/ValueSignal/valuesignal-cursor-plugin#readme",
-  "support": "https://github.com/ValueSignal/valuesignal-cursor-plugin/issues",
-  "privacy": "https://app.valuesignal.ai/privacy-policy.html",
   "license": "MIT",
   "keywords": [
     "valuesignal",
@@ -23,11 +20,12 @@
     "valuesignal": {
       "command": "node",
       "args": [
-        "mcp/server.mjs"
+        "${CLAUDE_PLUGIN_ROOT}/mcp/server.mjs"
       ],
       "env": {
         "VALUESIGNAL_API_BASE": "https://app.valuesignal.ai",
-        "VALUESIGNAL_JWT_TOKEN": "${VALUESIGNAL_JWT_TOKEN}"
+        "VALUESIGNAL_HOST": "claude-code",
+        "VALUESIGNAL_JWT_TOKEN": "${VALUESIGNAL_JWT_TOKEN:-}"
       }
     }
   }
