@@ -58,6 +58,14 @@ async function readTextFile(filePath, context) {
 }
 
 async function validateVersionConsistency(pluginDir, entry, pluginManifest, marketplace) {
+  const portableManifest = await readJsonFile(
+    path.join(pluginDir, 'plugin.json'),
+    `${entry.name} portable plugin.json`
+  );
+  const codexManifest = await readJsonFile(
+    path.join(pluginDir, '.codex-plugin', 'plugin.json'),
+    `${entry.name} Codex plugin.json`
+  );
   const packageManifest = await readJsonFile(
     path.join(pluginDir, 'package.json'),
     `${entry.name} package.json`
@@ -74,21 +82,28 @@ async function validateVersionConsistency(pluginDir, entry, pluginManifest, mark
     path.join(pluginDir, 'lib', 'config.mjs'),
     `${entry.name} config.mjs`
   );
-  const serverSource = await readTextFile(
+  const serverBundle = await readTextFile(
     path.join(pluginDir, 'mcp', 'server.mjs'),
     `${entry.name} MCP server`
+  );
+  const serverSource = await readTextFile(
+    path.join(pluginDir, 'mcp', 'server.source.mjs'),
+    `${entry.name} MCP server source`
   );
 
   const matchVersion = (source, pattern) => source?.match(pattern)?.[1] || null;
   const sites = {
     'marketplace.plugins[].version': entry.version,
+    'plugin.json': portableManifest?.version,
+    '.codex-plugin/plugin.json': codexManifest?.version,
     '.cursor-plugin/plugin.json': pluginManifest.version,
     '.claude-plugin/plugin.json': claudeManifest?.version,
     'package.json': packageManifest?.version,
     'package-lock.json': packageLock?.version,
     'package-lock.json packages[""]': packageLock?.packages?.['']?.version,
     'lib/config.mjs': matchVersion(configSource, /PLUGIN_VERSION\s*=\s*['"]([0-9]+\.[0-9]+\.[0-9]+(?:-[\w.-]+)?)['"]/),
-    'mcp/server.mjs': matchVersion(serverSource, /version\s*:\s*['"]([0-9]+\.[0-9]+\.[0-9]+(?:-[\w.-]+)?)['"]/),
+    'mcp/server.source.mjs': matchVersion(serverSource, /version\s*:\s*['"]([0-9]+\.[0-9]+\.[0-9]+(?:-[\w.-]+)?)['"]/),
+    'mcp/server.mjs': matchVersion(serverBundle, /version\s*:\s*['"]([0-9]+\.[0-9]+\.[0-9]+(?:-[\w.-]+)?)['"]/),
   };
 
   if (marketplace.metadata?.version !== undefined) {
@@ -108,6 +123,90 @@ async function validateVersionConsistency(pluginDir, entry, pluginManifest, mark
         .map(([site, version]) => `${site}=${version || 'UNREADABLE'}`)
         .join(', ')}`
     );
+  }
+}
+
+async function validatePortablePackaging(pluginDir, pluginName) {
+  const portable = await readJsonFile(
+    path.join(pluginDir, 'plugin.json'),
+    `${pluginName} portable plugin.json`
+  );
+  const codex = await readJsonFile(
+    path.join(pluginDir, '.codex-plugin', 'plugin.json'),
+    `${pluginName} Codex plugin.json`
+  );
+  const mcp = await readJsonFile(
+    path.join(pluginDir, 'mcp.json'),
+    `${pluginName} portable mcp.json`
+  );
+  const agentMarketplace = await readJsonFile(
+    path.join(pluginDir, '.agents', 'plugins', 'marketplace.json'),
+    `${pluginName} Agent Plugins marketplace.json`
+  );
+  if (!portable || !codex || !mcp || !agentMarketplace) return;
+
+  const pluginSchema = 'https://agent-plugins.org/schemas/1.0.0/plugin.schema.json';
+  const mcpSchema = 'https://agent-plugins.org/schemas/1.0.0/mcp.schema.json';
+  if (portable.$schema !== pluginSchema) {
+    addError(`${pluginName}: plugin.json must target ${pluginSchema}`);
+  }
+  if (portable.name !== pluginName) {
+    addError(`${pluginName}: portable plugin.json name mismatch`);
+  }
+
+  const portableInterface = portable.extensions?.['com.openai']?.interface;
+  if (!portableInterface || typeof portableInterface !== 'object') {
+    addError(`${pluginName}: plugin.json must define extensions.com.openai.interface`);
+  }
+
+  const derived = {
+    name: portable.name,
+    version: portable.version,
+    description: portable.description,
+    author: portable.author,
+    homepage: portable.homepage,
+    repository: portable.repository,
+    license: portable.license,
+    keywords: portable.keywords,
+    interface: portableInterface,
+  };
+  if (JSON.stringify(codex) !== JSON.stringify(derived)) {
+    addError(`${pluginName}: .codex-plugin/plugin.json is not derived from plugin.json`);
+  }
+
+  if (mcp.$schema !== mcpSchema) {
+    addError(`${pluginName}: mcp.json must target ${mcpSchema}`);
+  }
+  if (Object.keys(mcp).some((key) => !['$schema', 'mcpServers'].includes(key))) {
+    addError(`${pluginName}: mcp.json contains a non-portable top-level field`);
+  }
+  const server = mcp.mcpServers?.valuesignal;
+  if (server?.type !== 'stdio' || server?.command !== 'node') {
+    addError(`${pluginName}: portable valuesignal MCP server must use stdio with command "node"`);
+  }
+  if (JSON.stringify(server?.args) !== JSON.stringify(['mcp/server.mjs'])) {
+    addError(`${pluginName}: portable MCP args must resolve the committed bundle from plugin root`);
+  }
+  if (server?.env?.VALUESIGNAL_HOST !== undefined) {
+    addError(`${pluginName}: portable mcp.json must let the runtime detect the host`);
+  }
+  if (server?.env?.VALUESIGNAL_JWT_TOKEN !== undefined) {
+    addError(`${pluginName}: portable mcp.json must not embed or interpolate a credential`);
+  }
+
+  const agentEntry = agentMarketplace.plugins?.find((candidate) => candidate?.name === pluginName);
+  if (!agentEntry) {
+    addError(`${pluginName}: .agents marketplace is missing the plugin entry`);
+  } else {
+    if (agentEntry.source?.source !== 'local' || agentEntry.source?.path !== './') {
+      addError(`${pluginName}: .agents marketplace source must resolve from the public repo root`);
+    }
+    if (
+      agentEntry.policy?.installation !== 'AVAILABLE' ||
+      agentEntry.policy?.authentication !== 'ON_INSTALL'
+    ) {
+      addError(`${pluginName}: .agents marketplace must declare installation and auth policy`);
+    }
   }
 }
 
@@ -213,6 +312,7 @@ async function main() {
     }
 
     await validateVersionConsistency(pluginDir, entry, pluginManifest, marketplace);
+    await validatePortablePackaging(pluginDir, entry.name);
 
     if (pluginManifest.logo && !pluginManifest.logo.startsWith('http')) {
       const logoPath = path.join(pluginDir, pluginManifest.logo);

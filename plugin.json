@@ -1,0 +1,48 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "valuesignal",
+  "version": "1.0.14",
+  "description": "Capture AI-assisted work as private skill evidence and create verifiable proof of work.",
+  "author": {
+    "name": "ValueSignal",
+    "email": "support@valuesignal.ai",
+    "url": "https://valuesignal.ai"
+  },
+  "homepage": "https://valuesignal.ai",
+  "repository": "https://github.com/ValueSignal/valuesignal-cursor-plugin",
+  "license": "MIT",
+  "keywords": [
+    "valuesignal",
+    "ai-fluency",
+    "productivity",
+    "evidence",
+    "proof-of-work",
+    "logbook"
+  ],
+  "extensions": {
+    "com.openai": {
+      "interface": {
+        "displayName": "ValueSignal",
+        "shortDescription": "Turn AI-assisted work into verified skill evidence.",
+        "longDescription": "Capture meaningful AI-assisted work in a private ValueSignal logbook, measure skill signals over time, and create verifiable proof of work.",
+        "developerName": "ValueSignal",
+        "category": "Productivity",
+        "capabilities": [
+          "Read",
+          "Write"
+        ],
+        "websiteURL": "https://valuesignal.ai",
+        "privacyPolicyURL": "https://app.valuesignal.ai/privacy-policy.html",
+        "termsOfServiceURL": "https://app.valuesignal.ai/terms-of-service.html",
+        "defaultPrompt": [
+          "Check my ValueSignal connection.",
+          "Capture this AI exchange in my ValueSignal logbook.",
+          "Build a project-scoped ValueSignal proof for this repository."
+        ],
+        "brandColor": "#4CC9F0",
+        "composerIcon": "./assets/signal-mark.svg",
+        "logo": "./assets/logo.svg"
+      }
+    }
+  }
+}

@@ -1,7 +1,7 @@
 {
   "name": "valuesignal",
-  "version": "1.0.13",
-  "description": "Turn your real Cursor and Claude Code AI work into a verified builder profile \u2014 measured skill signals, private by default, shareable as proof of work.",
+  "version": "1.0.14",
+  "description": "Turn real AI-assisted work from Cursor, Claude Code, and Codex into a verified builder profile — private by default and shareable as proof of work.",
   "author": {
     "name": "ValueSignal",
     "email": "support@valuesignal.ai"

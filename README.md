@@ -1,82 +1,117 @@
-# ValueSignal for Cursor
+# ValueSignal for Cursor, Claude Code, and Codex
 
-Turn your real Cursor AI work into a verified builder profile — measured skill signals in your logbook, private by default, shareable as proof of work.
+Turn real AI-assisted work into a verified builder profile: measured skill signals in a private logbook, with verifiable proof of work when you choose to share it.
 
-## What you're building
+## What you are building
 
-Every turn you capture is evidence. Over a few real sessions that evidence compounds into a profile that reflects how you actually work with AI:
+Every turn you capture is evidence. Over multiple real sessions, that evidence compounds into a profile that reflects how you work with AI:
 
-1. **Capture** — send meaningful AI turns to ValueSignal as you work (manually via the `valuesignal_capture_turn` tool).
-2. **Signals accrue** — each capture is scored into skill and behavior signals. Individual turns score on capture; the profile gets meaningful as volume builds across multiple real sessions, so capture regularly rather than once.
-3. **Your Domain Signal + skill profile** — signals roll up into your strongest domains and a skill signature you can see in the logbook.
-4. **Proof of Work** — when you're ready, share a public Proof of Work artifact built from that verified activity, or mint a verifiable certification (`vs.proof.v1`) straight into a repo for screening processes.
+1. **Capture** — submit meaningful AI turns to ValueSignal when you choose, using `valuesignal_capture_turn`.
+2. **Accumulate signals** — each capture is scored into skill and behavior signals.
+3. **Build your profile** — signals roll up into your strongest domains and skill signature.
+4. **Create proof** — mint a verifiable Proof of Work certification (`vs.proof.v1`) for your whole profile or for one repository.
 
-Captures made from a workspace with a git remote are automatically bound to that repo's identity, so you can later mint a **project-scoped** certification that discloses only your validated work on that project — and verifiers can check the cert sits in the repo it was minted for.
+When the host runs in a workspace with a Git remote, the plugin binds captures to that repository identity. This supports project-scoped certifications that disclose only the relevant validated work.
 
-Private by default: nothing is shared until you choose to. Recruiter discovery is invite-only today, so building your profile now is about owning a verifiable record of your AI work — not broadcasting it.
+ValueSignal is private by default. Nothing is shared until you choose to create or publish an artifact.
 
 ## Requirements
 
-- ValueSignal account (https://app.valuesignal.ai)
-- Node.js 18+
-- Production API must have `INGRESS_CURSOR_PLUGIN_JWT_ONLY=true` (ValueSignal server env)
+- A [ValueSignal account](https://app.valuesignal.ai)
+- Node.js 18 or newer available to the host
+- A scoped ValueSignal API token
 
-Marketplace installs include the MCP runtime and do not require `npm install`.
-Dependencies are only installed when developing or rebuilding the committed bundle.
+Marketplace installs include the bundled MCP runtime and do not require `npm install`. Dependencies are needed only when developing or rebuilding the committed bundle.
 
-## Setup
+## Create an API token
 
-Use a scoped API token so you don't have to re-paste credentials. It only
-permits capturing AI activity (not account/billing access) and is revocable.
+1. Log in at [app.valuesignal.ai](https://app.valuesignal.ai).
+2. Open **Account Settings → Integrations & API tokens**.
+3. Generate a token and copy the `vs_pat_…` value. It is shown once.
 
-1. **Log in** at https://app.valuesignal.ai
-2. **Account Settings → Integrations & API tokens → Generate token**, then copy
-   the `vs_pat_…` value (shown once)
-3. **Cursor → Settings → Features → Model Context Protocol → valuesignal → Edit**
-4. Add env var:
-   - `VALUESIGNAL_JWT_TOKEN` = paste the token
-   - Optional: `VALUESIGNAL_API_BASE` = `https://app.valuesignal.ai`
-5. Enable the MCP server and reload Cursor (**Developer: Reload Window**)
+The token permits ValueSignal activity capture and is revocable. It does not grant account or billing access. A short-lived browser session token still works as a fallback, but the scoped API token is recommended.
 
-> A short-lived browser session token (`sessionStorage.getItem('valueSignalToken')`)
-> still works as a fallback, but it expires and must be re-pasted. Prefer the API token.
+## Install in Cursor
+
+Install or enable the ValueSignal marketplace plugin, then open:
+
+**Cursor → Settings → Features → Model Context Protocol → valuesignal → Edit**
+
+Set:
+
+- `VALUESIGNAL_JWT_TOKEN` to the token you generated
+- Optionally, `VALUESIGNAL_API_BASE` to `https://app.valuesignal.ai`
+
+Enable the MCP server and run **Developer: Reload Window**.
+
+## Install in Claude Code
+
+Make the token available to Claude Code, then install from the public marketplace:
+
+```bash
+export VALUESIGNAL_JWT_TOKEN='<your-vs_pat-token>'
+claude plugin marketplace add ValueSignal/valuesignal-cursor-plugin
+claude plugin install valuesignal@valuesignal
+```
+
+Start a new Claude Code session and confirm that `/mcp` shows `valuesignal` connected.
+
+## Install in Codex
+
+Make the token available to Codex, add the public marketplace, and install the plugin:
+
+```bash
+export VALUESIGNAL_JWT_TOKEN='<your-vs_pat-token>'
+codex plugin marketplace add ValueSignal/valuesignal-cursor-plugin
+codex plugin add valuesignal@valuesignal
+```
+
+Start a new Codex task so the plugin and its MCP tools load from the installed package.
+
+The portable Agent Plugins manifest does not embed credentials. Codex receives `VALUESIGNAL_JWT_TOKEN` from the environment used to launch it. A first-class install-time credential prompt is tracked separately from the 1.0.14 packaging release.
 
 ## MCP tools
 
 | Tool | Purpose |
-|------|---------|
-| `valuesignal_auth_status` | Verify JWT and API base |
-| `valuesignal_capture_turn` | Send one user/assistant turn to ingress (auto-binds to this workspace's git remote) |
-| `valuesignal_dashboard_url` | Logbook URL |
-| `valuesignal_build_proof` | Mint a verifiable Proof of Work certification — whole-profile, or `scope: "project"` to certify only this repo's work |
+|---|---|
+| `valuesignal_auth_status` | Verify the configured credential and API base |
+| `valuesignal_capture_turn` | Send one user/assistant turn to ingress and bind it to the current Git remote when available |
+| `valuesignal_dashboard_url` | Return the ValueSignal dashboard URL |
+| `valuesignal_build_proof` | Mint a whole-profile or project-scoped Proof of Work certification |
 
-## Local development (plugin folder)
+## Local development
 
 ```bash
 cd cursor-plugin/valuesignal
 npm ci
+npm run sync:codex-manifest
 npm run build:mcp
-VALUESIGNAL_JWT_TOKEN=... node mcp/server.mjs
+npm run validate
+npm run test:codex
+```
+
+To start the bundled server directly:
+
+```bash
+VALUESIGNAL_JWT_TOKEN='<your-vs_pat-token>' node mcp/server.mjs
 ```
 
 ## Security and data handling
 
-- **Open source in this repo:** MCP server, skills, rules, and commands only. The ValueSignal API and scoring stack are proprietary and not published here.
-- **Network:** The MCP server sends HTTPS requests only to `VALUESIGNAL_API_BASE` (default `https://app.valuesignal.ai`) when the user runs capture or auth tools. No other outbound endpoints.
-- **Credentials:** Users set `VALUESIGNAL_JWT_TOKEN` in Cursor MCP settings — preferably a scoped, revocable API token (`vs_pat_…`) generated in Account Settings, which is limited to activity capture (no account/billing access). A short-lived browser session token also works as a fallback. Tokens are not stored in the repository.
-- **Capture:** Users control what is submitted via `valuesignal_capture_turn`. The bundled rule blocks exfiltration of API keys, passwords, and `.env` content.
+- **Open source package:** The MCP server, skills, rules, commands, manifests, and tests are published. The ValueSignal scoring backend remains proprietary.
+- **Network:** The MCP server sends HTTPS requests only to `VALUESIGNAL_API_BASE`, which defaults to `https://app.valuesignal.ai`. No other outbound endpoint is used.
+- **Credentials:** Tokens are supplied through the host environment and are never stored in the repository or portable manifests.
+- **Capture control:** The plugin captures only when the user requests it. Credential-like content is redacted before submission.
 - **Details:** See [SECURITY.md](./SECURITY.md).
 
 ## Privacy
 
-Do not capture secrets, tokens, or credentials. See `rules/valuesignal-privacy.mdc`.
+Do not capture secrets, tokens, passwords, `.env` contents, or other credentials. Review each capture before submitting it.
 
-## CI
+## Validation
 
-GitHub Actions validates the manifests, rebuilds and diffs the committed MCP
-bundle, proves it starts from a clean directory without `node_modules`, and
-runs the plugin contract tests on every push to `main`.
+The package validators check the Cursor, Claude Code, Agent Plugins, and Codex manifests; version consistency; the generated MCP bundle; install-free startup; and tool contracts. The export script applies the same checks to the standalone public repository.
 
 ## License
 
-MIT (plugin package only). ValueSignal scoring backend and capture semantics are proprietary.
+MIT for the plugin package. ValueSignal scoring services and capture semantics are proprietary.

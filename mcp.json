@@ -1,11 +1,12 @@
 {
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/mcp.schema.json",
   "mcpServers": {
     "valuesignal": {
+      "type": "stdio",
       "command": "node",
       "args": ["mcp/server.mjs"],
       "env": {
-        "VALUESIGNAL_API_BASE": "https://app.valuesignal.ai",
-        "VALUESIGNAL_HOST": "cursor"
+        "VALUESIGNAL_API_BASE": "https://app.valuesignal.ai"
       }
     }
   }

@@ -15769,12 +15769,13 @@ var StdioServerTransport = class {
 import { randomUUID } from "crypto";
 
 // lib/config.mjs
-var PLUGIN_VERSION = "1.0.13";
+var PLUGIN_VERSION = "1.0.14";
 var KNOWN_HOSTS = /* @__PURE__ */ new Set(["cursor", "codex", "claude-code"]);
 function getPluginHost() {
   const declared = process.env.VALUESIGNAL_HOST?.trim().toLowerCase();
   if (declared && KNOWN_HOSTS.has(declared)) return declared;
   if (process.env.CLAUDECODE) return "claude-code";
+  if (process.env.CODEX_THREAD_ID) return "codex";
   return "cursor";
 }
 var DEFAULT_API_BASE = "https://app.valuesignal.ai";
@@ -16133,7 +16134,7 @@ function detectWorkspaceProjectRef() {
 
 // mcp/server.source.mjs
 var server = new Server(
-  { name: "valuesignal", version: "1.0.13" },
+  { name: "valuesignal", version: "1.0.14" },
   { capabilities: { tools: {} } }
 );
 server.setRequestHandler(ListToolsRequestSchema, async () => ({
@@ -16234,7 +16235,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
               "Not authenticated.",
               "1. Log in at https://app.valuesignal.ai",
               "2. Account Settings → Integrations & API tokens → Generate token",
-              "3. Cursor Settings → MCP → valuesignal → env VALUESIGNAL_JWT_TOKEN"
+              "3. Set VALUESIGNAL_JWT_TOKEN in your Cursor, Claude Code, or Codex MCP environment"
             ].join("\n")
           }
         ]

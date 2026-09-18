@@ -11,7 +11,7 @@ import { getApiBase, getJwt } from '../lib/config.mjs';
 import { detectWorkspaceProjectRef, normalizeProjectRef } from '../lib/project-ref.mjs';
 
 const server = new Server(
-  { name: 'valuesignal', version: '1.0.13' },
+  { name: 'valuesignal', version: '1.0.14' },
   { capabilities: { tools: {} } }
 );
 
@@ -137,7 +137,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
               'Not authenticated.',
               '1. Log in at https://app.valuesignal.ai',
               '2. Account Settings → Integrations & API tokens → Generate token',
-              '3. Cursor Settings → MCP → valuesignal → env VALUESIGNAL_JWT_TOKEN',
+              '3. Set VALUESIGNAL_JWT_TOKEN in your Cursor, Claude Code, or Codex MCP environment',
             ].join('\n'),
           },
         ],
